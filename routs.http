@@ -1,0 +1,35 @@
+POST http://localhost:3333/videos
+Content-Type: application/json
+
+{
+    "title": "Meu Primeiro Video",
+    "description": "Primeiro video no canal",
+    "duration": 180
+}
+
+###
+POST http://localhost:3333/videos
+Content-Type: application/json
+
+{
+    "title": "Meu Primeiro Video parte II",
+    "description": "Parte dois, aka segundo video do canal",
+    "duration": 180
+}
+###
+
+GET http://localhost:3333/videos
+
+###
+PUT http://localhost:3333/videos/9da04456-389d-4105-8a8f-35217f530d7a
+Content-Type: application/json
+
+{
+    "title": "Meu Segundo Video",
+    "description": "Segundo video do canal",
+    "duration": 190
+}
+###
+
+DELETE http://localhost:3333/videos/44a950d9-8c59-4a15-94be-4162396914a8
+
