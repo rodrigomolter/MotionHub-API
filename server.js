@@ -8,8 +8,10 @@ server.get('/', () => {
     return 'Hello World'
 })
 
-server.get('/videos', () => {
-    return db.list()
+server.get('/videos', (req,res) => {
+    const search = req.query.search
+
+    return db.list(search)
 })
 
 server.post('/videos', (req, resp) => {
@@ -19,7 +21,7 @@ server.post('/videos', (req, resp) => {
         description,
         duration
     })
-    console.log(db.list())
+
     return resp.status(201).send()
 })
 
