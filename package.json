@@ -5,14 +5,22 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "dev": "node --watch --no-warnings server.js"
+    "dev": "node --watch --no-warnings server.js",
+    "cy:open": "cypress open",
+    "cy:open:tablet": "cypress open --config viewportWidth=767,viewportHeight=480",
+    "test": "cypress run",
+    "test:tablet": "cypress run --config viewportWidth=767,viewportHeight=480",
+    "lint": "eslint cypress/**/*.js && eslint cypress.config.js && eslint src/**.js",
+    "lint:fix": "eslint cypress/**/*.js --fix && eslint cypress.config.js --fix && eslint src/**.js --fix"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "fastify": "^4.26.2"
+  "devDependencies": {
+    "cypress": "^13.7.1",
+    "eslint": "^8.57.0",
+    "fastify": "^4.26.2",
+    "eslint-plugin-cypress": "^2.15.1"
   }
 }
