@@ -4,6 +4,11 @@ import { DatabaseMemory } from './database-memory.js'
 const server = fastify()
 const db = new DatabaseMemory()
 
+
+server.get('/', () => {
+  return 'Hello World'
+})
+
 server.get('/videos', (req) => {
   const search = req.query.search
   return db.list(search)
