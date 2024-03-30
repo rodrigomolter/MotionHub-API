@@ -20,11 +20,13 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
+      - name: Install modules
+        run: npm install
       - name: Start MotionHUB server 🎬
         run: npm run start
 
   cypress-tests-desktop:
-    needs: nodejs-server
+    needs: eslint
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
