@@ -1,8 +1,7 @@
 import { faker } from '@faker-js/faker'
 
 describe('CRUD of a movie', () => {
-  // let movie
-  it('Successfully', () => {
+  it('Happy Path', () => {
     cy.createMovie()
       .then(response => {
         expect(response.status).to.equal(201)
@@ -43,6 +42,87 @@ describe('CRUD of a movie', () => {
         failOnStatusCode: false
       }).then(response => {
         expect(response.status).to.equal(404)
+      })
+    })
+  })
+
+  context('Alternatives Paths', () => {
+    context('Unexisting Id', () => {
+      it('GET a video with invalid id', () => {
+        cy.request({
+          method: 'GET',
+          url: `/videos/${faker.string.uuid()}`,
+          failOnStatusCode: false
+        }).then(response => {
+          expect(response.status).to.equal(404)
+        })
+      })
+
+      it('DELETE a video with invalid id', () => {
+        cy.request({
+          method: 'DELETE',
+          url: `/videos/${faker.string.uuid()}`,
+          failOnStatusCode: false
+        }).then(response => {
+          expect(response.status).to.equal(404)
+        })
+      })
+
+      it('UPDATE a video with invalid id', () => {
+        cy.request({
+          method: 'PUT',
+          url: `/videos/${faker.string.uuid()}`,
+          failOnStatusCode: false,
+          body:
+          {
+            title: faker.hacker.phrase(),
+            description: faker.hacker.phrase(),
+            duration: faker.number.int({ min: 1, max: 1200 })
+          }
+        }).then(response => {
+          expect(response.status).to.equal(404)
+        })
+      })
+    })
+
+    context('Invalid Fields', () => {
+      it('Create a new video without title', () => {
+        cy.request({
+          method: 'POST',
+          url: '/videos',
+          failOnStatusCode: false,
+          body: {
+            description: faker.hacker.phrase(),
+            duration: faker.number.int(1200)
+          }
+        }).then(response => {
+          expect(response.status).to.equal(400)
+        })
+      })
+
+      it('Create a new video with duration as string', () => {
+        cy.request({
+          method: 'POST',
+          url: '/videos',
+          failOnStatusCode: false,
+          body: {
+            title: faker.hacker.phrase(),
+            description: faker.hacker.phrase(),
+            duration: '180,1'
+          }
+        }).then(response => {
+          expect(response.status).to.equal(400)
+        })
+      })
+
+      it('Create a new video without header application/json', () => {
+        cy.request({
+          method: 'POST',
+          url: '/videos',
+          failOnStatusCode: false
+        }).then(response => {
+          expect(response.status).to.equal(415)
+        })
       })
     })
   })
