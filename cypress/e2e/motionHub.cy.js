@@ -123,6 +123,29 @@ describe('CRUD of a video', () => {
         })
       })
 
+      it('Update a new video without title', () => {
+        cy.createVideo()
+          .then(response => {
+            expect(response.status).to.equal(201)
+            let video = response.body[0]
+            cy.wrap(video).as('createdVideo')
+          })
+
+        cy.get('@createdVideo').then(video => {
+          cy.request({
+            method: 'PUT',
+            url: `/videos/${video.id}`,
+            failOnStatusCode: false,
+            body: {
+              description: faker.hacker.phrase(),
+              duration: faker.number.int(1200)
+            }
+          }).then(response => {
+            expect(response.status).to.equal(400)
+          })
+        })
+      })
+
       it('Create a new video with duration as string', () => {
         cy.request({
           method: 'POST',
