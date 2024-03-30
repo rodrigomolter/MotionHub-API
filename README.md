@@ -1,85 +1,47 @@
 # Motion Hub API
-It's a simple API where you can store the details of your videos, like Title, Description and Duration.<br>
-It uses `in-memory database`. It means will only store while running it and after **all data will be lost**.
+It's a simple API where you can store the details of your videos, like title, description and duration.<br>
+It uses `in-memory database`. It means it will only store data while running and when you stop the application **all data will be lost**.
 
-> Note: This is meant to pratice testing scenarios. It will have bugs on purpose to be reported and validate the tests.
 
-## Installation 🔧
+## Docs 📋
+Check the docummentation of the avaiable routs and querys in the [API Documentation Page](./DOCUMENTATION.md).
 
-Run `npm install` (or `npm i` for the short version) to install the dev dependencies.
+You can also see the **Test Plans** for the application.
+[🎬 Motion Hub API Testing Plans](https://dynamic-keeper-66c.notion.site/Motion-Hub-fe69d08e0e23419baf06ceeb23e669c9)
+## Installation 🏗️
+To run this project you will need
 
-## API
+- [Node.js](https://nodejs.org/en/) (I've used version `v18.17.1` while writing this doc)
 
-### `GET /videos`
-It will return all the videos avaiable. You can have a search query param to filter for the video title.
+**Note:** When installing Node.js, npm is automatically installed. 🚀
 
-| Path Params | Type | Required | Description |
-| :--- | :--- | :--- | :--- |
-| `search` | `string` | Optional | Only returns videos titles that matches que param. |
-
-Examples
-```http
-GET http://localhost:3333/videos?search=Node
+Run to install the dev dependencies
+```bash
+npm install
 ```
-___
 
-### `POST /videos`
-It adds a new video entry.
 
-| Body Params | Type | Required | Description |
-| :--- | :--- | :--- | :--- |
-| `title` | `string` | **Required** | The title of your video. |
-| `description` | `string` | **Required** | A description for your video. |
-| `duration` | `number` | **Required** | The total duration of your video (in seconds) |
-
-```http
-POST http://localhost:3333/videos
-Content-Type: application/json
-
-{
-    "title": "Node Video",
-    "description": "This is a video tutorial about node. Hope you like. Don't forget to subscribe and hit the like button!",
-    "duration": 180
-}
+Start the API with the command
+```bash
+npm run start
 ```
-___
 
-### `PUT /videos/:id`
-Updates a current video on the database based on the given id.
+## Running the tests ✔️
 
-| Path Params | Type | Required | Description |
-| :--- | :--- | :--- | :--- |
-| `id` | `string` | **Required** | Id of the current video you want to update. |
+In this project, you can run tests in interactive and headless mode
 
-<br>
+### Headless mode </>
 
-| Body Params | Type | Required | Description |
-| :--- | :--- | :--- | :--- |
-| `title` | `string` | Optional | The title of your video. |
-| `description` | `string` | Optional | A description for your video. |
-| `duration` | `number` | Optional | The total duration of your video (in seconds) |
-
-```http
-PUT http://localhost:3333/videos/9da04456-389d-4105-8a8f-35217f530d7a
-Content-Type: application/json
-
-{
-    "title": "Node Video with React",
-    "description": "This is a video tutorial about node. Now with react :)",
-    "duration": 180
-}
+Run `npm test` (or `npm t` for short) to run all tests in headless mode.
+```bash
+npm test
 ```
-___
 
-### `DELETE /videos/:id`
-Deletes a video based on the given id.
+### Interactive mode 🕹️
 
-| Path Params | Type | Required | Description |
-| :--- | :--- | :--- | :--- |
-| `id` | `string` | **Required** | Id of the current video you want to delete. |
-
-```http
-DELETE http://localhost:3333/videos/44a950d9-8c59-4a15-94be-4162396914a8
+Run `npm run cy:open` to open the __Cypress App__ to run tests in interactive mode.
+```bash
+npm run cy:open
 ```
 
 ## Support this project 🙌
