@@ -1,48 +1,48 @@
 import { faker } from '@faker-js/faker'
 
-describe('CRUD of a movie', () => {
+describe('CRUD of a video', () => {
 
   beforeEach(() => {
     cy.cleanDatabase()
   })
   it('Happy Path', () => {
-    cy.createMovie()
+    cy.createVideo()
       .then(response => {
         expect(response.status).to.equal(201)
-        let movie = response.body[0]
-        cy.wrap(movie).as('createdMovie')
+        let video = response.body[0]
+        cy.wrap(video).as('createdVideo')
       })
 
-    cy.get('@createdMovie').then(movie => {
+    cy.get('@createdVideo').then(video => {
       cy.request({
         method: 'GET',
-        url: `/videos/${movie.id}`,
+        url: `/videos/${video.id}`,
       }).then(response => {
         expect(response.status).to.equal(200)
-        expect(response.body[0]).to.deep.equal(movie)
+        expect(response.body[0]).to.deep.equal(video)
       })
 
-      const newMovie = {
-        id: movie.id,
+      const newVideo = {
+        id: video.id,
         title: faker.hacker.phrase(),
         description: faker.hacker.phrase(),
         duration: faker.number.int({ min: 1, max: 1200 })
       }
 
-      cy.updateMovie(newMovie)
+      cy.updateVideo(newVideo)
         .then(response => {
           expect(response.status).to.equal(200)
-          expect(response.body[0]).to.deep.equal(newMovie)
+          expect(response.body[0]).to.deep.equal(newVideo)
         })
 
-      cy.deleteMovie(movie.id)
+      cy.deleteVideo(video.id)
         .then(response => {
           expect(response.status).to.equal(204)
         })
 
       cy.request({
         method: 'GET',
-        url: `/videos/${movie.id}`,
+        url: `/videos/${video.id}`,
         failOnStatusCode: false
       }).then(response => {
         expect(response.status).to.equal(404)
@@ -51,20 +51,20 @@ describe('CRUD of a movie', () => {
   })
 
   it('Search Query', () => {
-    cy.createMovie({ title: `How to ${faker.word.words(5)}`})
+    cy.createVideo({ title: `How to ${faker.word.words(5)}`})
       .then(response => {
         expect(response.status).to.equal(201)
-        let movie = response.body[0]
-        cy.wrap(movie).as('createdMovie')
+        let video = response.body[0]
+        cy.wrap(video).as('createdVideo')
       })
 
-    cy.get('@createdMovie').then(movie => {
+    cy.get('@createdVideo').then(video => {
       cy.request({
         method: 'GET',
         url: '/videos/?search=How to',
       }).then(response => {
         expect(response.status).to.equal(200)
-        expect(response.body[0]).to.deep.equal(movie)
+        expect(response.body[0]).to.deep.equal(video)
       })
     })
   })

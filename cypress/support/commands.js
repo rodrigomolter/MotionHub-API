@@ -1,8 +1,8 @@
 /// <reference types="cypress" />
 import { faker } from '@faker-js/faker'
 
-Cypress.Commands.add('createMovie', (movie = {}) => {
-  const {title, description, duration} = movie
+Cypress.Commands.add('createVideo', (video = {}) => {
+  const {title, description, duration} = video
 
   cy.request({
     method: 'POST',
@@ -15,8 +15,8 @@ Cypress.Commands.add('createMovie', (movie = {}) => {
   })
 })
 
-Cypress.Commands.add('updateMovie', (movie = {}) => {
-  const {id, title, description, duration} = movie
+Cypress.Commands.add('updateVideo', (video = {}) => {
+  const {id, title, description, duration} = video
 
   cy.request({
     method: 'PUT',
@@ -30,10 +30,10 @@ Cypress.Commands.add('updateMovie', (movie = {}) => {
 })
 
 
-Cypress.Commands.add('deleteMovie', movieId => {
+Cypress.Commands.add('deleteVideo', videoId => {
   cy.request({
     method: 'DELETE',
-    url: `/videos/${movieId}`
+    url: `/videos/${videoId}`
   })
 })
 
@@ -42,10 +42,10 @@ Cypress.Commands.add('cleanDatabase', () => {
     method: 'GET',
     url: '/videos'
   }).then( response => {
-    cy.wrap(response.body).each(movie => {
+    cy.wrap(response.body).each(video => {
       cy.request({
         method: 'DELETE',
-        url: `videos/${movie.id}`
+        url: `videos/${video.id}`
       })
     })
   })
