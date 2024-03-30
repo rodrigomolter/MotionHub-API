@@ -23,6 +23,10 @@ server.get('/videos/:id', (req, res) => {
 })
 
 server.post('/videos', (req, res) => {
+  if (req.headers['content-type'] !== 'application/json') {
+    return res.status(415).send({ error: 'Content-Type must be application/json' })
+  }
+
   const {title, description, duration} = req.body
   if (!title || !description || !duration) {
     return res.status(400).send({ error: 'Fields title, description, and duration are required.' })
@@ -41,9 +45,13 @@ server.post('/videos', (req, res) => {
 })
 
 server.put('/videos/:id', (req, res) => {
+  if (req.headers['content-type'] !== 'application/json') {
+    return res.status(400).send({ error: 'Content-Type must be application/json' })
+  }
+
   const {title, description, duration} = req.body
   if (!title || !description || !duration) {
-    return res.status(400).send({ error: 'Fields title, description, and duration are required.'})
+    return res.status(415).send({ error: 'Fields title, description, and duration are required.'})
   }
   const video = db.get(req.params.id)
   if (!video.length)
