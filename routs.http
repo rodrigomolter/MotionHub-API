@@ -12,16 +12,20 @@ POST http://localhost:3333/videos
 Content-Type: application/json
 
 {
-    "title": "Meu Primeiro Video parte II",
+    "title": "Meu Primeiro Video",
     "description": "Parte dois, aka segundo video do canal",
     "duration": 180
 }
 ###
-
 GET http://localhost:3333/videos?search=II
+###
+###
+GET http://localhost:3333/videos
+###
+GET http://localhost:3333/videos/cb525bd0-92d8-462b-aee3-52abe33e8c0
 
 ###
-PUT http://localhost:3333/videos/9da04456-389d-4105-8a8f-35217f530d7a
+PUT http://localhost:3333/videos/9d997437-777e-4b02-9601-b809f1907549
 Content-Type: application/json
 
 {
