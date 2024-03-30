@@ -13,7 +13,7 @@ jobs:
     - name: Install modules
       run: npm install
     - name: Run ESLint
-      run: npm run 
+      run: npm run lint
       
   nodejs-server:
     needs: eslint
