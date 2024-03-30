@@ -14,19 +14,9 @@ jobs:
       run: npm install
     - name: Run ESLint
       run: npm run lint
-      
-  nodejs-server:
-    needs: eslint
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v3
-      - name: Install modules
-        run: npm install
-      - name: Start MotionHUB server 🎬
-        run: npm run start
 
   cypress-tests-desktop:
-    needs: eslint
+    needs: build
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
@@ -35,3 +25,18 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           command: npm run test
+
+  build:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        node-version: [18.x]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run start
