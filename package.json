@@ -25,6 +25,7 @@
     "fastify": "^4.26.2"
   },
   "dependencies": {
+    "@fastify/swagger-ui": "^3.0.0",
     "cypress-plugin-api": "^2.11.1"
   }
 }
