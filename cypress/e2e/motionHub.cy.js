@@ -1,6 +1,10 @@
 import { faker } from '@faker-js/faker'
 
 describe('CRUD of a movie', () => {
+
+  beforeEach(() => {
+    cy.cleanDatabase()
+  })
   it('Happy Path', () => {
     cy.createMovie()
       .then(response => {
@@ -42,6 +46,25 @@ describe('CRUD of a movie', () => {
         failOnStatusCode: false
       }).then(response => {
         expect(response.status).to.equal(404)
+      })
+    })
+  })
+
+  it.only('Search Query', () => {
+    cy.createMovie({ title: `How to ${faker.word.words(5)}`})
+      .then(response => {
+        expect(response.status).to.equal(201)
+        let movie = response.body[0]
+        cy.wrap(movie).as('createdMovie')
+      })
+
+    cy.get('@createdMovie').then(movie => {
+      cy.request({
+        method: 'GET',
+        url: '/videos/?search=How to',
+      }).then(response => {
+        expect(response.status).to.equal(200)
+        expect(response.body[0]).to.deep.equal(movie)
       })
     })
   })

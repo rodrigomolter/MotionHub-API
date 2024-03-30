@@ -12,7 +12,7 @@ POST http://localhost:3333/videos
 
 
 ###
-GET http://localhost:3333/videos?search=II
+GET http://localhost:3333/videos?search=How to
 ###
 ###
 GET http://localhost:3333/videos

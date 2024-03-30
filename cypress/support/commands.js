@@ -36,3 +36,17 @@ Cypress.Commands.add('deleteMovie', movieId => {
     url: `/videos/${movieId}`
   })
 })
+
+Cypress.Commands.add('cleanDatabase', () => {
+  cy.request({
+    method: 'GET',
+    url: '/videos'
+  }).then( response => {
+    cy.wrap(response.body).each(movie => {
+      cy.request({
+        method: 'DELETE',
+        url: `videos/${movie.id}`
+      })
+    })
+  })
+})
