@@ -50,7 +50,7 @@ describe('CRUD of a movie', () => {
     })
   })
 
-  it.only('Search Query', () => {
+  it('Search Query', () => {
     cy.createMovie({ title: `How to ${faker.word.words(5)}`})
       .then(response => {
         expect(response.status).to.equal(201)
