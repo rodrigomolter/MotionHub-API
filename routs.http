@@ -22,10 +22,10 @@ GET http://localhost:3333/videos?search=II
 ###
 GET http://localhost:3333/videos
 ###
-GET http://localhost:3333/videos/cb525bd0-92d8-462b-aee3-52abe33e8c0
+GET http://localhost:3333/videos/0acdce83-7841-4633-87c3-9123163b91f9
 
 ###
-PUT http://localhost:3333/videos/9d997437-777e-4b02-9601-b809f1907549
+PUT http://localhost:3333/videos/0acdce83-7841-4633-87c3-9123163b91f9
 Content-Type: application/json
 
 {
@@ -35,5 +35,5 @@ Content-Type: application/json
 }
 ###
 
-DELETE http://localhost:3333/videos/44a950d9-8c59-4a15-94be-4162396914a8
+DELETE http://localhost:3333/videos/0acdce83-7841-4633-87c3-9123163b91f9
 

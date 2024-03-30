@@ -10,8 +10,7 @@ server.get('/', () => {
 })
 
 server.get('/videos', (req) => {
-  const search = req.query.search
-  return db.list(search)
+  return db.list(req.query.search)
 })
 
 server.get('/videos/:id', (req, res) => {
@@ -20,7 +19,7 @@ server.get('/videos/:id', (req, res) => {
   if (video.length)
     return video
 
-  return res.status(404).send()
+  return res.status(404).send({ error: 'Not found any video within this id'})
 })
 
 server.post('/videos', (req, res) => {
@@ -30,11 +29,13 @@ server.post('/videos', (req, res) => {
   }
   if (isNaN(duration))
     return res.status(400).send({ error: 'Duration must be a number' })
-  const newVideo = db.create({
-    title,
-    description,
-    duration
-  })
+
+  const newVideo =
+   db.create({
+     title,
+     description,
+     duration
+   })
 
   return res.status(201).send(newVideo)
 })
@@ -45,28 +46,25 @@ server.put('/videos/:id', (req, res) => {
     return res.status(400).send({ error: 'Fields title, description, and duration are required.'})
   }
   const video = db.get(req.params.id)
-  if (video.length) {
-    db.update(req.params.id, {
-      title,
-      description,
-      duration
-    })
-  } else {
+  if (!video.length)
     return res.status(404).send({ error: 'Not found any video within this id'})
-  }
 
+  db.update(req.params.id, {
+    title,
+    description,
+    duration
+  })
   return db.get(req.params.id)
 })
 
 server.delete('/videos/:id', (req, res) => {
   const video = db.get(req.params.id)
 
-  if (video.length) {
-    db.delete(req.params.id)
-    return res.status(204).send()
-  } else {
-    return res.status(404).send()
-  }
+  if (!video.length)
+    return res.status(404).send({ error: 'Not found any video within this id'})
+
+  db.delete(req.params.id)
+  return res.status(204).send()
 })
 
 server.listen({
