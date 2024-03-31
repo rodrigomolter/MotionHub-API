@@ -1,8 +1,8 @@
 {
   "name": "motionhub",
   "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
+  "description": "An API where you can store the details of your videos, like title, description and duration.",
+  "main": "src/server.js",
   "type": "module",
   "scripts": {
     "start": "node ./src/server.js",
@@ -14,9 +14,20 @@
     "lint": "eslint cypress/**/*.js && eslint cypress.config.js && eslint src/**.js",
     "lint:fix": "eslint cypress/**/*.js --fix && eslint cypress.config.js --fix && eslint src/**.js --fix"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rodrigomolter/MotionHub-API.git"
+  },
+  "keywords": [
+    "Cypress",
+    "API Testing"
+  ],
+  "author": "Rodrigo Molter <rodrigo.molter@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rodrigomolter/MotionHub-API/issues"
+  },
+  "homepage": "https://github.com/rodrigomolter/MotionHub-API#readme",
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
     "@fastify/swagger": "^8.14.0",
