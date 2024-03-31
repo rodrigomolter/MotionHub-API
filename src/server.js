@@ -4,6 +4,15 @@ import { DatabaseMemory } from './database-memory.js'
 const server = fastify()
 const db = new DatabaseMemory()
 
+await server.register(import('@fastify/swagger'), {
+  mode: 'static',
+  specification: {
+    path: './src/swagger.yaml'
+  },
+  exposeRoute: true
+
+})
+await server.register(import('@fastify/swagger-ui'))
 
 server.get('/', () => {
   return 'Hello World'

@@ -19,11 +19,12 @@
   "license": "ISC",
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
+    "@fastify/swagger": "^8.14.0",
+    "@fastify/swagger-ui": "^3.0.0",
     "cypress": "^13.7.1",
+    "cypress-plugin-api": "^2.11.1",
     "eslint": "^8.57.0",
     "eslint-plugin-cypress": "^2.15.1",
-    "fastify": "^4.26.2",
-    "@fastify/swagger-ui": "^3.0.0",
-    "cypress-plugin-api": "^2.11.1"
+    "fastify": "^4.26.2"
   }
 }

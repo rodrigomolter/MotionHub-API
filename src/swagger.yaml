@@ -1,0 +1,185 @@
+openapi: 3.0.0
+info:
+  title: MotionHUB API
+  description: It's a simple API where you can store the details of your videos, like title, description and duration. It uses in-memory database. It means it will only store data while running and when you stop the application all data will be lost.
+  version: 1.0.1
+  contact:
+    name: Rodrigo Molter
+    url: 'https://www.linkedin.com/in/rodrigo-molter/'
+    email: 'rodrigo.molter@gmail.com'
+servers:
+  - url: http://localhost:3333
+    description: Local server
+paths:
+  /videos:
+    get:
+      summary: Return all the videos avaiable. You can have a search query param to filter for the video title.
+      parameters:
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: Filter videos by title.
+      responses:
+        '200':
+          description: Return all the videos found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Video'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+    post:
+      summary: Create a new video
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                duration:
+                  type: integer
+      responses:
+        '201':
+          description: The video was successfully created!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Video'
+        '400':
+          description: Bad request - Fields title, description, and duration are required or duration must be a number.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: Not found any video with the given id.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  '/videos/{id}':
+    get:
+      summary: List you a specific video filtered by its id.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The video was found successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Video'
+        '404':
+          description: Not found any video with the given id.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+    put:
+      summary: Updates the current video on the database based on the given id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Video'
+      responses:
+        '200':
+          description: The video was updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Video'
+        '400':
+          description: Bad request - Fields title, description, and duration are required
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: Not found any video with the given id.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+    delete:
+      summary: Delete a video by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: The video was deleted successfully.
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+components:
+  schemas:
+    Video:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the video
+        title:
+          type: string
+          description: Title of the video
+        description:
+          type: string
+          description: Description of the video
+        duration:
+          type: integer
+          description: Duration of the video in seconds
+      required:
+        - title
+        - description
+        - duration

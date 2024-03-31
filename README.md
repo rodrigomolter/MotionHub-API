@@ -1,13 +1,19 @@
-# Motion Hub API
+# Motion Hub API 🎬
 It's a simple API where you can store the details of your videos, like title, description and duration.<br>
 It uses `in-memory database`. It means it will only store data while running and when you stop the application **all data will be lost**.
 
 
 ## Docs 📋
-Check the docummentation of the avaiable routs and querys in the [API Documentation Page](./DOCUMENTATION.md).
+You can check the API Documentation while running the application on<br>
 
-You can also see the **Test Plans** for the application.
-[🎬 Motion Hub API Testing Plans](https://dynamic-keeper-66c.notion.site/Motion-Hub-fe69d08e0e23419baf06ceeb23e669c9)
+**http://localhost:3333/documentation**
+
+Or enter the [swagger.yaml](./src/swagger.yaml) in the [SwaggerEditor](https://editor-next.swagger.io/)
+
+
+## Test Plan 👨‍🔬
+The avaiable **Test Plans** for the application are located here: <br>
+**[🎬 Motion Hub API Testing Plans](https://dynamic-keeper-66c.notion.site/Motion-Hub-fe69d08e0e23419baf06ceeb23e669c9)**
 ## Installation 🏗️
 To run this project you will need
 
