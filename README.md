@@ -14,6 +14,11 @@ Or enter the [swagger.yaml](./src/swagger.yaml) in the [SwaggerEditor](https://e
 ## Test Plan 👨‍🔬
 The avaiable **Test Plans** for the application are located here: <br>
 **[🎬 Motion Hub API Testing Plans](https://dynamic-keeper-66c.notion.site/Motion-Hub-fe69d08e0e23419baf06ceeb23e669c9)**
+
+Postman Collection: <br>
+[<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://god.gw.postman.com/run-collection/29423847-32dbbd61-03d0-4847-b921-d91967c92396?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D29423847-32dbbd61-03d0-4847-b921-d91967c92396%26entityType%3Dcollection%26workspaceId%3D72d946be-8169-4862-9d2d-4817608871b6)
+
+
 ## Installation 🏗️
 To run this project you will need
 
