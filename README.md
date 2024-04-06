@@ -1,6 +1,11 @@
 # Motion Hub API 🎬
-It's a simple API where you can store the details of your videos, like title, description and duration.<br>
-It uses `in-memory database`. It means it will only store data while running and when you stop the application **all data will be lost**.
+ 
+<div align=center>
+  <img src="https://github.com/rodrigomolter/MotionHub-API/assets/57466763/4be77745-14d9-4716-952e-0822c229b576">
+
+  It's a simple API where you can store the details of your videos, like title, description and duration.<br>
+  It uses `in-memory database`. It means it will only store data while running and when you stop the application **all data will be lost**.
+</div>
 
 
 ## Docs 📋
