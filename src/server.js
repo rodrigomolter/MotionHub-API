@@ -85,6 +85,6 @@ server.delete('/videos/:id', (req, res) => {
 })
 
 server.listen({
-  port: 3333
+  port: 8080
 })
 
