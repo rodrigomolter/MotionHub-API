@@ -2,7 +2,7 @@ import { defineConfig } from 'cypress'
 
 export default defineConfig({
   e2e: {
-    baseUrl: 'http://localhost:3333',
+    baseUrl: 'http://localhost:8080',
     env: {
       hideCredentials: true,
       requestMode: true,
