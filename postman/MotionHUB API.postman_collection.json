@@ -1,0 +1,919 @@
+{
+	"info": {
+		"_postman_id": "32dbbd61-03d0-4847-b921-d91967c92396",
+		"name": "MotionHUB API",
+		"description": "# Motion Hub API 🎬\n\nIt's a simple API where you can store the details of your videos, like title, description and duration.\n\nIt uses `in-memory database`. It means it will only store data while running and when you stop the application **all data will be lost**.\n\n## Docs 📋\n\nYou can check the API Documentation while running the application on\n\n[<b>http://localhost:3333/documentation</b>](http://localhost:3333/documentation)\n\nOr enter the [swagger.yaml](https://./src/swagger.yaml) in the [SwaggerEditor](https://editor-next.swagger.io/)\n\n## Test Plan 👨‍🔬\n\nThe avaiable **Test Plans** for the application are located here:\n\n[<b>🎬 Motion Hub API Testing Plans</b>](https://dynamic-keeper-66c.notion.site/Motion-Hub-fe69d08e0e23419baf06ceeb23e669c9)\n\n## Run the Project\n\nCheck the [Motion Hub API on Github](https://github.com/rodrigomolter/MotionHub-API)\n\n---\n\nMade with love 🧡 by [Rodrigo Molter](https://www.linkedin.com/in/rodrigo-molter/)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33621843",
+		"_collection_link": "https://aspirantes-da-automao.postman.co/workspace/Rodrigo-Molter~72d946be-8169-4862-9d2d-4817608871b6/collection/29423847-32dbbd61-03d0-4847-b921-d91967c92396?action=share&source=collection_link&creator=33621843"
+	},
+	"item": [
+		{
+			"name": "Happy Path",
+			"item": [
+				{
+					"name": "Create a new video successfully",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"const videoTitle = pm.collectionVariables.get('videoTitle');\r",
+									"const videoDescription = pm.collectionVariables.get('videoDescription');\r",
+									"const videoDuration = pm.collectionVariables.get('videoDuration');\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response should be an object\", () => {pm.expect(response[0]).to.an('object') });\r",
+									"\r",
+									"pm.test(\"Response should have a property id\", () => {pm.expect(response[0]).haveOwnProperty('id') });\r",
+									"pm.test(\"id should be a string\", () => {pm.expect(response[0].id).to.a('string')});\r",
+									"\r",
+									"pm.test(\"Response should have a property title\", () => {pm.expect(response[0]).haveOwnProperty('title') });\r",
+									"pm.test(\"Title should match\", () => {pm.expect(response[0].title).to.be.equal(videoTitle) });\r",
+									"\r",
+									"pm.test(\"Response should have a property description\", () => {pm.expect(response[0]).haveOwnProperty('description') });\r",
+									"pm.test(\"Description should match\", () => {pm.expect(response[0].description).to.be.equal(videoDescription) });\r",
+									"\r",
+									"pm.test(\"Response should have a property duration\", () => {pm.expect(response[0]).haveOwnProperty('duration') });\r",
+									"pm.test(\"Duration should match\", () => {pm.expect(response[0].duration).to.be.equal(videoDuration) });\r",
+									"\r",
+									"pm.collectionVariables.set('videoId', response[0].id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.collectionVariables.set('videoTitle', pm.variables.replaceIn('{{$randomCatchPhrase}}'));\r",
+									"pm.collectionVariables.set('videoDescription', pm.variables.replaceIn('{{$randomLoremSentence}}'));\r",
+									"pm.collectionVariables.set('videoDuration', pm.variables.replaceIn('{{$randomInt}}'));"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"{{videoTitle}}\",\r\n    \"description\": \"{{videoDescription}}\",\r\n    \"duration\": \"{{videoDuration}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/videos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"videos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List one video by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"const videoId = pm.collectionVariables.get('videoId');\r",
+									"const videoTitle = pm.collectionVariables.get('videoTitle');\r",
+									"const videoDescription = pm.collectionVariables.get('videoDescription');\r",
+									"const videoDuration = pm.collectionVariables.get('videoDuration');\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response should be an object\", () => {pm.expect(response[0]).to.an('object') });\r",
+									"\r",
+									"pm.test(\"Response should have a property id\", () => {pm.expect(response[0]).haveOwnProperty('id') });\r",
+									"pm.test(\"Id should match\", () => {pm.expect(response[0].id).to.be.equal(videoId) });\r",
+									"\r",
+									"pm.test(\"Response should have a property title\", () => {pm.expect(response[0]).haveOwnProperty('title') });\r",
+									"pm.test(\"Title should match\", () => {pm.expect(response[0].title).to.be.equal(videoTitle) });\r",
+									"\r",
+									"pm.test(\"Response should have a property description\", () => {pm.expect(response[0]).haveOwnProperty('description') });\r",
+									"pm.test(\"Description should match\", () => {pm.expect(response[0].description).to.be.equal(videoDescription) });\r",
+									"\r",
+									"pm.test(\"Response should have a property duration\", () => {pm.expect(response[0]).haveOwnProperty('duration') });\r",
+									"pm.test(\"Duration should match\", () => {pm.expect(response[0].duration).to.be.equal(videoDuration) });\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/videos/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"videos",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{videoId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update one video successfully",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.collectionVariables.set('videoTitle', pm.variables.replaceIn('{{$randomCatchPhrase}}'));"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"const videoId = pm.collectionVariables.get('videoId');\r",
+									"const videoTitle = pm.collectionVariables.get('videoTitle');\r",
+									"const videoDescription = pm.collectionVariables.get('videoDescription');\r",
+									"const videoDuration = pm.collectionVariables.get('videoDuration');\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response should be an object\", () => {pm.expect(response[0]).to.an('object') });\r",
+									"\r",
+									"pm.test(\"Response should have a property id\", () => {pm.expect(response[0]).haveOwnProperty('id') });\r",
+									"pm.test(\"Id should match\", () => {pm.expect(response[0].id).to.be.equal(videoId) });\r",
+									"\r",
+									"pm.test(\"Response should have a property title\", () => {pm.expect(response[0]).haveOwnProperty('title') });\r",
+									"pm.test(\"Title should match\", () => {pm.expect(response[0].title).to.be.equal(videoTitle) });\r",
+									"\r",
+									"pm.test(\"Response should have a property description\", () => {pm.expect(response[0]).haveOwnProperty('description') });\r",
+									"pm.test(\"Description should match\", () => {pm.expect(response[0].description).to.be.equal(videoDescription) });\r",
+									"\r",
+									"pm.test(\"Response should have a property duration\", () => {pm.expect(response[0]).haveOwnProperty('duration') });\r",
+									"pm.test(\"Duration should match\", () => {pm.expect(response[0].duration).to.be.equal(videoDuration) });\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"{{videoTitle}}\",\r\n    \"description\": \"{{videoDescription}}\",\r\n    \"duration\": \"{{videoDuration}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/videos/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"videos",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{videoId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a new video with filter query",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"const videoTitle = pm.collectionVariables.get('videoTitle');\r",
+									"const videoDescription = pm.collectionVariables.get('videoDescription');\r",
+									"const videoDuration = pm.collectionVariables.get('videoDuration');\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response should be an object\", () => {pm.expect(response[0]).to.an('object') });\r",
+									"\r",
+									"pm.test(\"Response should have a property id\", () => {pm.expect(response[0]).haveOwnProperty('id') });\r",
+									"pm.test(\"id should be a string\", () => {pm.expect(response[0].id).to.a('string')});\r",
+									"\r",
+									"pm.test(\"Response should have a property title\", () => {pm.expect(response[0]).haveOwnProperty('title') });\r",
+									"pm.test(\"Title should match\", () => {pm.expect(response[0].title).to.be.equal(videoTitle) });\r",
+									"\r",
+									"pm.test(\"Response should have a property description\", () => {pm.expect(response[0]).haveOwnProperty('description') });\r",
+									"pm.test(\"Description should match\", () => {pm.expect(response[0].description).to.be.equal(videoDescription) });\r",
+									"\r",
+									"pm.test(\"Response should have a property duration\", () => {pm.expect(response[0]).haveOwnProperty('duration') });\r",
+									"pm.test(\"Duration should match\", () => {pm.expect(response[0].duration).to.be.equal(videoDuration) });\r",
+									"\r",
+									"pm.collectionVariables.set('videoId', response[0].id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.collectionVariables.set('videoTitle', pm.collectionVariables.get('searchQuery') + pm.variables.replaceIn('{{$randomCatchPhrase}}') );\r",
+									"pm.collectionVariables.set('videoDescription', pm.variables.replaceIn('{{$randomLoremSentence}}'));\r",
+									"pm.collectionVariables.set('videoDuration', pm.variables.replaceIn('{{$randomInt}}'));"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"{{videoTitle}}\",\r\n    \"description\": \"{{videoDescription}}\",\r\n    \"duration\": \"{{videoDuration}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/videos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"videos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Searchs a video with a filter",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"\r",
+									"const searchQuery = pm.collectionVariables.get('searchQuery');\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"for (video of response) {\r",
+									"    console.log(video)\r",
+									"    pm.test(\"Video Title should include Query String\", () => {pm.expect(video.title).contains(searchQuery) });\r",
+									"\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/videos?search={{searchQuery}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"videos"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "{{searchQuery}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete one video successfully",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"allVideosIds = pm.variables.get('allVideosIds')\r",
+									"if (allVideosIds && allVideosIds.length > 0) {\r",
+									"    console.log(allVideosIds)\r",
+									"    pm.collectionVariables.set('videoId', allVideosIds.pop());\r",
+									"    pm.collectionVariables.set('allVideosIds', allVideosIds);\r",
+									"    if (allVideosIds > 0)postman.setNextRequest(pm.info.requestId);\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/videos/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"videos",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{videoId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check if video deleted",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/videos/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"videos",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{videoId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List All Videos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test('Get all Videos Id', () => {\r",
+									"    var videos = [];\r",
+									"    var nextRequest = null;\r",
+									"    \r",
+									"    for (video of response){\r",
+									"        videos.push(video.id);\r",
+									"    }\r",
+									"    \r",
+									"    pm.collectionVariables.set('allVideosIds', videos);\r",
+									"    if (videos.length > 0)  nextRequest = \"7ba883ea-dd85-4fbe-a676-18afa6f30d26\"; // 'Deletes a video request Id\r",
+									"    postman.setNextRequest(nextRequest)\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/videos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"videos"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Validates a Happy Path of the CRUD (Create, Read, Update, Delete) of the application"
+		},
+		{
+			"name": "Invalid Inputs",
+			"item": [
+				{
+					"name": "List a video with invalid id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response should be an object\", () => {pm.expect(response).to.an('object') });\r",
+									"\r",
+									"pm.test(\"Response should have an error\", () => {pm.expect(response).haveOwnProperty('error') });\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/videos/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"videos",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{invalidId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a video with invalid id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response should be an object\", () => {pm.expect(response).to.an('object') });\r",
+									"\r",
+									"pm.test(\"Response should have an error\", () => {pm.expect(response).haveOwnProperty('error') });\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/videos/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"videos",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{invalidId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a video with invalid id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response should be an object\", () => {pm.expect(response).to.an('object') });\r",
+									"\r",
+									"pm.test(\"Response should have an error\", () => {pm.expect(response).haveOwnProperty('error') });\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"10 Tips for Productive Remote Work\",\r\n    \"description\": \"Maximize your productivity while working remotely with these helpful tips\",\r\n    \"duration\": 300\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/videos/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"videos",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{invalidId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a video without title",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response should be an object\", () => {pm.expect(response).to.an('object') });\r",
+									"\r",
+									"pm.test(\"Response should have an error\", () => {pm.expect(response).haveOwnProperty('error') });\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"Maximize your productivity while working remotely with these helpful tips\",\r\n    \"duration\": 300\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/videos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"videos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a video without title",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response should be an object\", () => {pm.expect(response).to.an('object') });\r",
+									"\r",
+									"pm.test(\"Response should have an error\", () => {pm.expect(response).haveOwnProperty('error') });\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"Maximize your productivity while working remotely with these helpful tips\",\r\n    \"duration\": 300\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/videos/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"videos",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{videoId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a new video with duration as string",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response should be an object\", () => {pm.expect(response).to.an('object') });\r",
+									"\r",
+									"pm.test(\"Response should have an error\", () => {pm.expect(response).haveOwnProperty('error') });\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"10 Tips for Productive Remote Work\",\r\n    \"description\": \"Maximize your productivity while working remotely with these helpful tips\",\r\n    \"duration\": \"300,1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/videos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"videos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a new video without header application/json",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 415\", function () {\r",
+									"    pm.response.to.have.status(415);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response should be an object\", () => {pm.expect(response).to.an('object') });\r",
+									"\r",
+									"pm.test(\"Response should have an error\", () => {pm.expect(response).haveOwnProperty('error') });\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"10 Tips for Productive Remote Work\",\r\n    \"description\": \"Maximize your productivity while working remotely with these helpful tips\",\r\n    \"duration\": \"300,1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/videos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"videos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "localhost:3333",
+			"type": "string"
+		},
+		{
+			"key": "videoId",
+			"value": ""
+		},
+		{
+			"key": "videoTitle",
+			"value": ""
+		},
+		{
+			"key": "videoDescription",
+			"value": ""
+		},
+		{
+			"key": "videoDuration",
+			"value": ""
+		},
+		{
+			"key": "allVideosIds",
+			"value": ""
+		},
+		{
+			"key": "searchQuery",
+			"value": "BREKING NEWS: "
+		},
+		{
+			"key": "invalidId",
+			"value": "123456789"
+		}
+	]
+}
